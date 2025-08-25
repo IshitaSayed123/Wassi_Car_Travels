@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Wassi Car Travels – Your Journey, Our Priority.</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+    body {
+        font-family: 'Inter', sans-serif;
+    }
+    /* Custom styles for the mobile menu transition */
+    .mobile-menu {
+      transition: transform 0.3s ease-in-out;
+    }
+  </style>
+</head>
+<!-- The body has a white background and dark text -->
+<body class="bg-white text-gray-800">
+
+  <!-- Navbar now is responsive with a hamburger menu -->
+  <header class="bg-white shadow-lg py-4 border-b border-gray-200 relative">
+    <div class="container mx-auto flex justify-between items-center px-6">
+      <!-- Hamburger Menu Button - visible on small screens, now black -->
+      <button id="hamburger-menu" class="text-black focus:outline-none sm:hidden">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+        </svg>
+      </button>
+
+      <!-- Logo Section -->
+      <div class="flex items-center space-x-2">
+        <img src="https://img.icons8.com/ios-filled/50/car--v1.png" alt="Wassi Car Travels Logo" class="w-10 h-10 text-blue-600">
+        <h1 class="text-xl font-bold text-blue-600">Wassi Car Travels</h1>
+      </div>
+      
+      <!-- Tagline on the right -->
+      <span class="italic text-xs text-gray-500 hidden sm:block" data-key="tagline">Your Journey, Our Priority.</span>
+    </div>
+
+    <!-- Mobile Menu Container - hidden by default, slides in from the left -->
+    <div id="mobile-menu-container" class="mobile-menu fixed top-0 left-0 h-full w-64 bg-white shadow-xl z-50 transform -translate-x-full">
+      <div class="p-6">
+        <!-- Close button for the menu, now black -->
+        <button id="close-menu" class="text-black focus:outline-none absolute top-4 right-4">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+        
+        <!-- Language Dropdown is now inside the hamburger menu -->
+        <div class="mt-8">
+          <label for="language-select" class="block text-sm font-medium text-gray-700 mb-2" data-key="select-language">Select Language:</label>
+          <select id="language-select" class="border border-gray-300 rounded-md p-2 w-full text-gray-800 bg-gray-100">
+            <option value="en">English</option>
+            <option value="te">Telugu</option>
+            <option value="hi">Hindi</option>
+            <option value="ta">Tamil</option>
+            <option value="ml">Malayalam</option>
+            <option value="kn">Kannada</option>
+            <option value="pa">Punjabi</option>
+            <option value="bn">Bengali</option>
+            <option value="gu">Gujarati</option>
+            <option value="mr">Marathi</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section has a light blue background -->
+  <section class="bg-blue-50 py-10 text-center">
+    <h2 class="text-3xl font-bold text-blue-700 mb-4" data-key="hero-heading">Welcome to Wassi Car Travels</h2>
+    <p class="text-md text-gray-700" data-key="hero-text">Reliable, affordable, and friendly travel for every need.</p>
+  </section>
+
+  <!-- Service cards are now responsive, stacking on small screens -->
+  <section id="services" class="py-10 px-4 bg-white">
+    <h2 class="text-2xl font-semibold text-center text-blue-700 mb-8" data-key="services-heading">Our Services</h2>
+    <!-- This grid is now responsive: 1 column on small screens, 2 on medium, and 3 on large screens -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+
+      <!-- Local Rides -->
+      <div class="bg-white shadow-lg rounded-lg p-6 text-center border border-gray-200">
+        <img src="https://img.icons8.com/ios-filled/100/taxi.png" alt="Local Rides" class="w-16 h-16 mx-auto mb-3 text-blue-600" />
+        <h3 class="text-lg font-bold text-blue-600 mb-2" data-key="local-rides-heading">Local Rides</h3>
+        <p class="text-sm text-gray-600" data-key="local-rides-text">Comfortable and affordable rides within the city.</p>
+      </div>
+
+      <!-- Outstation Trips -->
+      <div class="bg-white shadow-lg rounded-lg p-6 text-center border border-gray-200">
+        <img src="https://img.icons8.com/ios-filled/100/highway.png" alt="Outstation Trips" class="w-16 h-16 mx-auto mb-3 text-blue-600" />
+        <h3 class="text-lg font-bold text-blue-600 mb-2" data-key="outstation-trips-heading">Outstation Trips</h3>
+        <p class="text-sm text-gray-600" data-key="outstation-trips-text">Plan your family or business trips with us.</p>
+      </div>
+
+      <!-- Airport Pickup & Drop -->
+      <div class="bg-white shadow-lg rounded-lg p-6 text-center border border-gray-200">
+        <img src="https://img.icons8.com/ios-filled/100/airport.png" alt="Airport Pickup" class="w-16 h-16 mx-auto mb-3 text-blue-600" />
+        <h3 class="text-lg font-bold text-blue-600 mb-2" data-key="airport-heading">Airport Pickup & Drop</h3>
+        <p class="text-sm text-gray-600" data-key="airport-text">Timely airport services with professional drivers.</p>
+      </div>
+
+      <!-- Temple Visits -->
+      <div class="bg-white shadow-lg rounded-lg p-6 text-center border border-gray-200">
+        <!-- New Temple Logo (Gopuram) with black color -->
+        <svg class="w-16 h-16 mx-auto mb-3 text-black" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-label="Temple logo">
+          <!-- base platform -->
+          <path d="M32 344h448v112H32z"/>
+          <!-- side pillared halls -->
+          <g>
+            <rect x="56" y="360" width="72" height="80"/>
+            <rect x="384" y="360" width="72" height="80"/>
+            <!-- pillars left -->
+            <rect x="66" y="388" width="12" height="52"/>
+            <rect x="90" y="388" width="12" height="52"/>
+            <rect x="114" y="388" width="12" height="52"/>
+            <!-- pillars right -->
+            <rect x="394" y="388" width="12" height="52"/>
+            <rect x="418" y="388" width="12" height="52"/>
+            <rect x="442" y="388" width="12" height="52"/>
+          </g>
+          <!-- main gopuram (trapezoid tower) -->
+          <polygon points="148,88 364,88 404,344 108,344" />
+          <!-- doorway -->
+          <rect x="224" y="360" width="64" height="96"/>
+          <!-- central window slots -->
+          <rect x="244" y="116" width="24" height="28"/>
+          <rect x="244" y="166" width="24" height="28"/>
+          <rect x="244" y="216" width="24" height="28"/>
+          <rect x="244" y="266" width="24" height="28"/>
+          <rect x="244" y="316" width="24" height="28"/>
+          <!-- top finials (small flames) -->
+          <path d="M200 72c10-16 10-24 0-40-10 16-10 24 0 40z"/>
+          <path d="M232 72c10-16 10-24 0-40-10 16-10 24 0 40z"/>
+          <path d="M264 72c10-16 10-24 0-40-10 16-10 24 0 40z"/>
+          <path d="M296 72c10-16 10-24 0-40-10 16-10 24 0 40z"/>
+          <path d="M328 72c10-16 10-24 0-40-10 16-10 24 0 40z"/>
+          <!-- fence ornaments on platform -->
+          <g>
+            <path d="M84 344l10-16 10 16h-20z"/>
+            <path d="M116 344l10-16 10 16h-20z"/>
+            <path d="M148 344l10-16 10 16h-20z"/>
+            <path d="M180 344l10-16 10 16h-20z"/>
+            <path d="M212 344l10-16 10 16h-20z"/>
+            <path d="M290 344l10-16 10 16h-20z"/>
+            <path d="M322 344l10-16 10 16h-20z"/>
+            <path d="M354 344l10-16 10 16h-20z"/>
+            <path d="M386 344l10-16 10 16h-20z"/>
+            <path d="M418 344l10-16 10 16h-20z"/>
+          </g>
+        </svg>
+        <h3 class="text-lg font-bold text-blue-600 mb-2" data-key="temple-visits-heading">Temple Visits</h3>
+        <p class="text-sm text-gray-600" data-key="temple-visits-text">Spiritual journeys to famous temples with comfortable travel.</p>
+      </div>
+
+      <!-- Tour Packages -->
+      <div class="bg-white shadow-lg rounded-lg p-6 text-center border border-gray-200">
+        <img src="https://img.icons8.com/ios-filled/100/around-the-globe.png" alt="Tour Packages" class="w-16 h-16 mx-auto mb-3 text-blue-600" />
+        <h3 class="text-lg font-bold text-blue-600 mb-2" data-key="tour-packages-heading">Tour Packages</h3>
+        <p class="text-sm text-gray-600" data-key="tour-packages-text">Explore famous tourist destinations with our curated travel plans.</p>
+      </div>
+
+       <!-- Cars -->
+      <div class="bg-white shadow-lg rounded-lg p-6 text-center border border-gray-200">
+        <img src="https://img.icons8.com/ios-filled/100/car--v1.png" alt="Cars" class="w-16 h-16 mx-auto mb-3 text-blue-600" />
+        <h3 class="text-lg font-bold text-blue-600 mb-2" data-key="cars-heading">Cars</h3>
+        <p class="text-sm text-gray-600" data-key="cars-text">A variety of cars to suit your needs.</p>
+      </div>
+      
+    </div>
+  </section>
+
+  <!-- Admin Contact Section now stacks on mobile -->
+  <section id="admins" class="py-10 px-4 bg-white">
+    <h2 class="text-xl font-semibold text-center text-blue-700 mb-8" data-key="contact-heading">Contact Our Admins</h2>
+    <!-- This flexbox container now changes direction from column to row on small screens -->
+    <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-8 max-w-xl mx-auto">
+      <!-- Admin 1 -->
+      <div class="bg-white shadow-lg rounded-lg p-6 text-center w-full border border-gray-200">
+        <h3 class="text-md font-bold text-blue-600 mb-2" data-key="admin1-name">Sayed Khasim Saheb</h3>
+        <a href="tel:9290630775" class="text-blue-600 hover:underline text-sm">9290630775</a>
+      </div>
+      <!-- Admin 2 -->
+      <div class="bg-white shadow-lg rounded-lg p-6 text-center w-full border border-gray-200">
+        <h3 class="text-md font-bold text-blue-600 mb-2" data-key="admin2-name">Sayed Khadar</h3>
+        <a href="tel:7797795786" class="text-blue-600 hover:underline text-sm">7797795786</a>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Booking Section Button -->
+  <section id="booking-button" class="bg-white py-10 px-6 text-center">
+    <!-- Button now has a blue that contrasts well on the light background -->
+    <a href="booking.html" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-md shadow-md text-sm" data-key="book-button">
+      Book Your Ride
+    </a>
+  </section>
+
+  <!-- Footer has a light gray background -->
+  <footer class="bg-gray-200 text-gray-600 text-center py-4 mt-10">
+    <p class="text-xs">&copy; 2025 Wassi Car Travels. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Object containing translations for different languages
+    const translations = {
+      en: {
+        'tagline': 'Your Journey, Our Priority.',
+        'hero-heading': 'Welcome to Wassi Car Travels',
+        'hero-text': 'Reliable, affordable, and friendly travel for every need.',
+        'services-heading': 'Our Services',
+        'local-rides-heading': 'Local Rides',
+        'local-rides-text': 'Comfortable and affordable rides within the city.',
+        'outstation-trips-heading': 'Outstation Trips',
+        'outstation-trips-text': 'Plan your family or business trips with us.',
+        'airport-heading': 'Airport Pickup & Drop',
+        'airport-text': 'Timely airport services with professional drivers.',
+        'temple-visits-heading': 'Temple Visits',
+        'temple-visits-text': 'Spiritual journeys to famous temples with comfortable travel.',
+        'tour-packages-heading': 'Tour Packages',
+        'tour-packages-text': 'Explore famous tourist destinations with our curated travel plans.',
+        'contact-heading': 'Contact Our Admins',
+        'admin1-name': 'Sayed Khasim Saheb',
+        'admin2-name': 'Sayed Khadar',
+        'cars-heading': 'Cars',
+        'cars-text': 'A variety of cars to suit your needs.',
+        'book-button': 'Book Your Ride',
+        'select-language': 'Select Language:'
+      },
+      te: {
+        'tagline': 'మీ ప్రయాణం, మా ప్రాధాన్యత.',
+        'hero-heading': 'Wassi Car Travels కు స్వాగతం',
+        'hero-text': 'ప్రతి అవసరానికి నమ్మదగిన, సరసమైన మరియు స్నేహపూర్వక ప్రయాణాలు.',
+        'services-heading': 'మా సేవలు',
+        'local-rides-heading': 'స్థానిక ప్రయాణాలు',
+        'local-rides-text': 'నగరంలో సౌకర్యవంతమైన మరియు సరసమైన ప్రయాణాలు.',
+        'outstation-trips-heading': 'బయటి ప్రయాణాలు',
+        'outstation-trips-text': 'మీ కుటుంబం లేదా వ్యాపార ప్రయాణాలను మాతో ప్లాన్ చేసుకోండి.',
+        'airport-heading': 'ఎయిర్‌పోర్ట్ పిక్అప్ & డ్రాప్',
+        'airport-text': 'వృత్తిపరమైన డ్రైవర్‌లతో సమయానికి ఎయిర్‌పోర్ట్ సేవలు.',
+        'temple-visits-heading': 'దేవాలయ సందర్శనలు',
+        'temple-visits-text': 'సౌకర్యవంతమైన ప్రయాణాలతో ప్రముఖ దేవాలయాల ఆధ్యాత్మిక ప్రయాణాలు.',
+        'tour-packages-heading': 'టూర్ ప్యాకేజీలు',
+        'tour-packages-text': 'మా క్యురేటెడ్ ప్రయాణ ప్లాన్‌లతో ప్రముఖ పర్యాటక ప్రదేశాలను అన్వేషించండి.',
+        'contact-heading': 'మా నిర్వాహకులను సంప్రదించండి',
+        'admin1-name': 'సయ్యద్ ఖాసిం సాహెబ్',
+        'admin2-name': 'సయ్యద్ ఖాదర్',
+        'cars-heading': 'కార్లు',
+        'cars-text': 'మీ అవసరాలకు అనుగుణంగా వివిధ రకాల కార్లు.',
+        'book-button': 'మీ ప్రయాణాన్ని బుక్ చేసుకోండి',
+        'select-language': 'భాషను ఎంచుకోండి:'
+      },
+      hi: {
+        'tagline': 'आपकी यात्रा, हमारी प्राथमिकता।',
+        'hero-heading': 'Wassi Car Travels में आपका स्वागत है',
+        'hero-text': 'हर ज़रूरत के लिए विश्वसनीय, किफायती और दोस्ताना यात्रा।',
+        'services-heading': 'हमारी सेवाएं',
+        'local-rides-heading': 'स्थानीय यात्राएं',
+        'local-rides-text': 'शहर के भीतर आरामदायक और किफायती सवारी।',
+        'outstation-trips-heading': 'बाहरी यात्राएं',
+        'outstation-trips-text': 'हमारे साथ अपनी पारिवारिक या व्यावसायिक यात्राओं की योजना बनाएं।',
+        'airport-heading': 'हवाई अड्डा पिकअप और ड्रॉप',
+        'airport-text': 'पेशेवर ड्राइवरों के साथ समय पर हवाई अड्डा सेवाएं।',
+        'temple-visits-heading': 'मंदिर दर्शन',
+        'temple-visits-text': 'आरामदायक यात्रा के साथ प्रसिद्ध मंदिरों की आध्यात्मिक यात्राएं।',
+        'tour-packages-heading': 'टूर पैकेज',
+        'tour-packages-text': 'हमारी क्यूरेटेड यात्रा योजनाओं के साथ प्रसिद्ध पर्यटन स्थलों का अन्वेषण करें।',
+        'contact-heading': 'हमारे प्रशासकों से संपर्क करें',
+        'admin1-name': 'सैयद कासिम साहिब',
+        'admin2-name': 'सैयद खादर',
+        'cars-heading': 'कारें',
+        'cars-text': 'आपकी जरूरतों के अनुरूप विभिन्न प्रकार की कारें।',
+        'book-button': 'अपनी यात्रा बुक करें',
+        'select-language': 'भाषा चुनें:'
+      },
+      ta: {
+        'tagline': 'உங்கள் பயணம், எங்கள் முன்னுரிமை.',
+        'hero-heading': 'வாசி கார் டிராவல்ஸுக்கு வரவேற்கிறோம்',
+        'hero-text': 'ஒவ்வொரு தேவைக்கும் நம்பகமான, மலிவு மற்றும் நட்புரீதியான பயணம்.',
+        'services-heading': 'எங்கள் சேவைகள்',
+        'local-rides-heading': 'உள்ளூர் சவாரிகள்',
+        'local-rides-text': 'நகரத்திற்குள் வசதியான மற்றும் மலிவு சவாரிகள்.',
+        'outstation-trips-heading': 'வெளியூர் பயணங்கள்',
+        'outstation-trips-text': 'உங்கள் குடும்ப அல்லது வணிக பயணங்களை எங்களுடன் திட்டமிடுங்கள்.',
+        'airport-heading': 'விமான நிலைய பிக்கப் & டிராப்',
+        'airport-text': 'தொழில்முறை ஓட்டுநர்களுடன் சரியான நேரத்தில் விமான நிலைய சேவைகள்.',
+        'temple-visits-heading': 'கோயில் வருகைகள்',
+        'temple-visits-text': 'வசதியான பயணத்துடன் பிரபலமான கோவில்களுக்கு ஆன்மீக பயணங்கள்.',
+        'tour-packages-heading': 'சுற்றுலா தொகுப்புகள்',
+        'tour-packages-text': 'எங்கள் பயண திட்டங்களுடன் பிரபலமான சுற்றுலா இடங்களை ஆராயுங்கள்.',
+        'contact-heading': 'எங்கள் நிர்வாகிகளை தொடர்பு கொள்ளவும்',
+        'admin1-name': 'சையது காசிம் சாஹிப்',
+        'admin2-name': 'சையது காதர்',
+        'cars-heading': 'கார்கள்',
+        'cars-text': 'உங்கள் தேவைக்கு ஏற்ற பல்வேறு வகையான கார்கள்.',
+        'book-button': 'உங்கள் சவாரியை பதிவு செய்யுங்கள்',
+        'select-language': 'மொழியைத் தேர்ந்தெடுக்கவும்:'
+      },
+      ml: {
+        'tagline': 'നിങ്ങളുടെ യാത്ര, ഞങ്ങളുടെ മുൻഗണന.',
+        'hero-heading': 'വാസി കാർ ട്രാവൽസിലേക്ക് സ്വാഗതം',
+        'hero-text': 'എല്ലാ ആവശ്യങ്ങൾക്കും വിശ്വസനീയവും, താങ്ങാനാവുന്നതും, സൗഹൃദപരവുമായ യാത്ര.',
+        'services-heading': 'ഞങ്ങളുടെ സേവനങ്ങൾ',
+        'local-rides-heading': 'പ്രാദേശിക യാത്രകൾ',
+        'local-rides-text': 'നഗരത്തിനുള്ളിൽ സൗകര്യപ്രദവും താങ്ങാനാവുന്നതുമായ യാത്രകൾ.',
+        'outstation-trips-heading': 'ഔട്ട്‌സ്റ്റേഷൻ യാത്രകൾ',
+        'outstation-trips-text': 'നിങ്ങളുടെ കുടുംബത്തിനോ ബിസിനസ്സിനോ വേണ്ടിയുള്ള യാത്രകൾ ഞങ്ങളോടൊപ്പം ആസൂത്രണം ചെയ്യുക.',
+        'airport-heading': 'എയർപോർട്ട് പിക്കപ്പ് & ഡ്രോപ്പ്',
+        'airport-text': 'പ്രൊഫഷണൽ ഡ്രൈവർമാരുമായി കൃത്യസമയത്തുള്ള എയർപോർട്ട് സേവനങ്ങൾ.',
+        'temple-visits-heading': 'ക്ഷേത്ര സന്ദർശനങ്ങൾ',
+        'temple-visits-text': 'സൗകര്യപ്രദമായ യാത്രയോടെ പ്രശസ്തമായ ക്ഷേത്രങ്ങളിലേക്കുള്ള ആത്മീയ യാത്രകൾ.',
+        'tour-packages-heading': 'ടൂർ പാക്കേജുകൾ',
+        'tour-packages-text': 'ഞങ്ങളുടെ ക്യൂറേറ്റ് ചെയ്ത യാത്രാ പദ്ധതികളോടെ പ്രശസ്തമായ വിനോദസഞ്ചാര കേന്ദ്രങ്ങൾ സന്ദർശിക്കുക.',
+        'contact-heading': 'ഞങ്ങളുടെ അഡ്മിനുകളുമായി ബന്ധപ്പെടുക',
+        'admin1-name': 'സയീദ് ഖാസിം സാഹിബ്',
+        'admin2-name': 'സയീദ് ഖാദർ',
+        'cars-heading': 'കാറുകൾ',
+        'cars-text': 'നിങ്ങളുടെ ആവശ്യങ്ങൾക്കനുസരിച്ച് വിവിധതരം കാറുകൾ.',
+        'book-button': 'നിങ്ങളുടെ യാത്ര ബുക്ക് ചെയ്യുക',
+        'select-language': 'ഭാഷ തിരഞ്ഞെടുക്കുക:'
+      },
+      kn: {
+        'tagline': 'ನಿಮ್ಮ ಪ್ರಯಾಣ, ನಮ್ಮ ಆದ್ಯತೆ.',
+        'hero-heading': 'ವಾಸಿ ಕಾರ್ ಟ್ರಾವೆಲ್ಸ್ ಗೆ ಸ್ವಾಗತ',
+        'hero-text': 'ಪ್ರತಿ ಅಗತ್ಯಕ್ಕೆ ವಿಶ್ವಾಸಾರ್ಹ, ಕೈಗೆಟುಕುವ ಮತ್ತು ಸ್ನೇಹಪರ ಪ್ರಯಾಣ.',
+        'services-heading': 'ನಮ್ಮ ಸೇವೆಗಳು',
+        'local-rides-heading': 'ಸ್ಥಳೀಯ ಸವಾರಿಗಳು',
+        'local-rides-text': 'ನಗರದೊಳಗೆ ಆರಾಮದಾಯಕ ಮತ್ತು ಕೈಗೆಟುಕುವ ಸವಾರಿಗಳು.',
+        'outstation-trips-heading': 'ಹೊರ ಪ್ರವಾಸಗಳು',
+        'outstation-trips-text': 'ನಮ್ಮೊಂದಿಗೆ ನಿಮ್ಮ ಕುಟುಂಬ ಅಥವಾ ವ್ಯಾಪಾರ ಪ್ರವಾಸಗಳನ್ನು ಯೋಜಿಸಿ.',
+        'airport-heading': 'ವಿಮಾನ ನಿಲ್ದಾಣ ಪಿಕಪ್ ಮತ್ತು ಡ್ರಾಪ್',
+        'airport-text': 'ವೃತ್ತಿಪರ ಚಾಲಕರೊಂದಿಗೆ ಸಮಯಕ್ಕೆ ಸರಿಯಾದ ವಿಮಾನ ನಿಲ್ದಾಣ ಸೇವೆಗಳು.',
+        'temple-visits-heading': 'ದೇವಾಲಯ ಭೇಟಿಗಳು',
+        'temple-visits-text': 'ಆರಾಮದಾಯಕ ಪ್ರಯಾಣದೊಂದಿಗೆ ಪ್ರಸಿದ್ಧ ದೇವಾಲಯಗಳಿಗೆ ಆಧ್ಯಾತ್ಮಿಕ ಪ್ರಯಾಣಗಳು.',
+        'tour-packages-heading': 'ಪ್ರವಾಸ ಪ್ಯಾಕೇಜ್‌ಗಳು',
+        'tour-packages-text': 'ನಮ್ಮ ಕ್ಯುರೇಟೆಡ್ ಪ್ರವಾಸ ಯೋಜನೆಗಳೊಂದಿಗೆ ಪ್ರಸಿದ್ಧ ಪ್ರವಾಸಿ ಸ್ಥಳಗಳನ್ನು ಅನ್ವೇಷಿಸಿ.',
+        'contact-heading': 'ನಮ್ಮ ನಿರ್ವಾಹಕರನ್ನು ಸಂಪರ್ಕಿಸಿ',
+        'admin1-name': 'ಸೈಯದ್ ಖಾಸಿಂ ಸಾಹೇಬ್',
+        'admin2-name': 'ಸೈಯದ್ ಖಾದರ್',
+        'cars-heading': 'ಕಾರುಗಳು',
+        'cars-text': 'ನಿಮ್ಮ ಅಗತ್ಯಕ್ಕೆ ತಕ್ಕಂತೆ ವಿವಿಧ ರೀತಿಯ ಕಾರುಗಳು.',
+        'book-button': 'ನಿಮ್ಮ ಸವಾರಿಯನ್ನು ಬುಕ್ ಮಾಡಿ',
+        'select-language': 'ಭಾಷೆ ಆಯ್ಕೆಮಾಡಿ:'
+      },
+      pa: {
+        'tagline': 'ਤੁਹਾਡੀ ਯਾਤਰਾ, ਸਾਡੀ ਤਰਜੀਹ।',
+        'hero-heading': 'ਵਾਸੀ ਕਾਰ ਟ੍ਰੈਵਲਜ਼ ਵਿੱਚ ਤੁਹਾਡਾ ਸੁਆਗਤ ਹੈ',
+        'hero-text': 'ਹਰ ਲੋੜ ਲਈ ਭਰੋਸੇਯੋਗ, ਕਿਫਾਇਤੀ, ਅਤੇ ਦੋਸਤਾਨਾ ਯਾਤਰਾ।',
+        'services-heading': 'ਸਾਡੀਆਂ ਸੇਵਾਵਾਂ',
+        'local-rides-heading': 'ਸਥਾਨਕ ਸਵਾਰੀਆਂ',
+        'local-rides-text': 'ਸ਼ਹਿਰ ਦੇ ਅੰਦਰ ਆਰਾਮਦਾਇਕ ਅਤੇ ਕਿਫਾਇਤੀ ਸਵਾਰੀਆਂ।',
+        'outstation-trips-heading': 'ਆਊਟਸਟੇਸ਼ਨ ਯਾਤਰਾਵਾਂ',
+        'outstation-trips-text': 'ਸਾਡੇ ਨਾਲ ਆਪਣੇ ਪਰਿਵਾਰਕ ਜਾਂ ਵਪਾਰਕ ਯਾਤਰਾਵਾਂ ਦੀ ਯੋਜਨਾ ਬਣਾਓ।',
+        'airport-heading': 'ਏਅਰਪੋਰਟ ਪਿਕਅੱਪ ਅਤੇ ਡ੍ਰੌਪ',
+        'airport-text': 'ਪੇਸ਼ੇਵਰ ਡਰਾਈਵਰਾਂ ਨਾਲ ਸਮੇਂ ਸਿਰ ਏਅਰਪੋਰਟ ਸੇਵਾਵਾਂ।',
+        'temple-visits-heading': 'ਮੰਦਰਾਂ ਦੇ ਦਰਸ਼ਨ',
+        'temple-visits-text': 'ਆਰਾਮਦਾਇਕ ਯਾਤਰਾ ਦੇ ਨਾਲ ਪ੍ਰਸਿੱਧ ਮੰਦਰਾਂ ਲਈ ਰੂਹਾਨੀ ਯਾਤਰਾਵਾਂ।',
+        'tour-packages-heading': 'ਟੂਰ ਪੈਕੇਜ',
+        'tour-packages-text': 'ਸਾਡੀਆਂ ਤਿਆਰ ਕੀਤੀਆਂ ਯਾਤਰਾ ਯੋਜਨਾਵਾਂ ਨਾਲ ਪ੍ਰਸਿੱਧ ਸੈਲਾਨੀ ਸਥਾਨਾਂ ਦੀ ਪੜਚੋਲ ਕਰੋ।',
+        'contact-heading': 'ਸਾਡੇ ਪ੍ਰਬੰਧਕਾਂ ਨਾਲ ਸੰਪਰਕ ਕਰੋ',
+        'admin1-name': 'ਸੈਯਦ ਕਾਸਿਮ ਸਾਹਿਬ',
+        'admin2-name': 'ਸੈਯਦ ਖਾਦਰ',
+        'cars-heading': 'ਕਾਰਾਂ',
+        'cars-text': 'ਤੁਹਾਡੀਆਂ ਲੋੜਾਂ ਅਨੁਸਾਰ ਵੱਖ-ਵੱਖ ਕਿਸਮਾਂ ਦੀਆਂ ਕਾਰਾਂ।',
+        'book-button': 'ਆਪਣੀ ਸਵਾਰੀ ਬੁੱਕ ਕਰੋ',
+        'select-language': 'ਭਾਸ਼ਾ ਚੁਣੋ:'
+      },
+      bn: {
+        'tagline': 'আপনার যাত্রা, আমাদের অগ্রাধিকার।',
+        'hero-heading': 'ওয়াসি কার ট্রাভেলসে স্বাগতম',
+        'hero-text': 'প্রতিটি প্রয়োজনের জন্য নির্ভরযোগ্য, সাশ্রয়ী এবং বন্ধুত্বপূর্ণ ভ্রমণ।',
+        'services-heading': 'আমাদের পরিষেবাগুলি',
+        'local-rides-heading': 'স্থানীয় রাইডস',
+        'local-rides-text': 'শহরের মধ্যে আরামদায়ক এবং সাশ্রয়ী রাইডস।',
+        'outstation-trips-heading': 'আউটস্টেশন ট্রিপস',
+        'outstation-trips-text': 'আমাদের সাথে আপনার পরিবার বা ব্যবসার ভ্রমণের পরিকল্পনা করুন।',
+        'airport-heading': 'বিমানবন্দর পিকআপ এবং ড্রপ',
+        'airport-text': 'পেশাদার ড্রাইভারদের সাথে সময়মতো বিমানবন্দর পরিষেবা।',
+        'temple-visits-heading': 'মন্দির পরিদর্শন',
+        'temple-visits-text': 'আরামদায়ক ভ্রমণের সাথে বিখ্যাত মন্দিরগুলিতে আধ্যাত্মিক যাত্রা।',
+        'tour-packages-heading': 'ট্যুর প্যাকেজ',
+        'tour-packages-text': 'আমাদের কিউরেট করা ভ্রমণ পরিকল্পনা দিয়ে বিখ্যাত পর্যটন স্থানগুলি অন্বেষণ করুন।',
+        'contact-heading': 'আমাদের প্রশাসকদের সাথে যোগাযোগ করুন',
+        'admin1-name': 'সৈয়দ কাসিম সাহেব',
+        'admin2-name': 'সৈয়দ খাদের',
+        'cars-heading': 'গাড়ি',
+        'cars-text': 'আপনার প্রয়োজন অনুসারে বিভিন্ন ধরণের গাড়ি।',
+        'book-button': 'আপনার রাইড বুক করুন',
+        'select-language': 'ভাষা নির্বাচন করুন:'
+      },
+      gu: {
+        'tagline': 'તમારી યાત્રા, અમારી પ્રાથમિકતા.',
+        'hero-heading': 'વાસી કાર ટ્રાવેલ્સમાં આપનું સ્વાગત છે',
+        'hero-text': 'દરેક જરૂરિયાત માટે વિશ્વસનીય, સસ્તું અને મૈત્રીપૂર્ણ મુસાફરી.',
+        'services-heading': 'અમારી સેવાઓ',
+        'local-rides-heading': 'સ્થાનિક રાઈડ્સ',
+        'local-rides-text': 'શહેરની અંદર આરામદાયક અને સસ્તું રાઈડ્સ.',
+        'outstation-trips-heading': 'આઉટસ્ટેશન ટ્રિપ્સ',
+        'outstation-trips-text': 'અમારી સાથે તમારી કૌટુંબિક અથવા વ્યવસાયિક યાત્રાઓનું આયોજન કરો.',
+        'airport-heading': 'એરપોર્ટ પિકઅપ અને ડ્રોપ',
+        'airport-text': 'પ્રોફેશનલ ડ્રાઇવરો સાથે સમયસર એરપોર્ટ સેવાઓ.',
+        'temple-visits-heading': 'મંદિરની મુલાકાતો',
+        'temple-visits-text': 'આરામદાયક મુસાફરી સાથે પ્રખ્યાત મંદિરોની આધ્યાત્મિક યાત્રાઓ.',
+        'tour-packages-heading': 'ટૂર પેકેજો',
+        'tour-packages-text': 'અમારા ક્યુરેટેડ મુસાફરી યોજનાઓ સાથે પ્રખ્યાત પર્યટન સ્થળોનું અન્વેષણ કરો.',
+        'contact-heading': 'અમારા સંચાલકોનો સંપર્ક કરો',
+        'admin1-name': 'સૈયદ કાસિમ સાહેબ',
+        'admin2-name': 'સૈયદ ખાદર',
+        'cars-heading': 'કાર',
+        'cars-text': 'તમારી જરૂરિયાત અનુસાર વિવિધ પ્રકારની કાર.',
+        'book-button': 'તમારી રાઈડ બુક કરો',
+        'select-language': 'ભાષા પસંદ કરો:'
+      },
+      mr: {
+        'tagline': 'तुमची यात्रा, आमची प्राथमिकता.',
+        'hero-heading': 'वसी कार ट्रॅव्हल्स मध्ये आपले स्वागत आहे',
+        'hero-text': 'प्रत्येक गरजेसाठी विश्वसनीय, परवडणारी आणि मैत्रीपूर्ण प्रवास.',
+        'services-heading': 'आमच्या सेवा',
+        'local-rides-heading': 'स्थानिक राईड्स',
+        'local-rides-text': 'शहरात आरामदायक आणि परवडणाऱ्या राईड्स.',
+        'outstation-trips-heading': 'बाहेरच्या सहली',
+        'outstation-trips-text': 'तुमच्या कुटुंबाच्या किंवा व्यावसायिक सहलींची योजना आमच्यासोबत करा.',
+        'airport-heading': 'विमानतळ पिकअप आणि ड्रॉप',
+        'airport-text': 'व्यावसायिक चालकांसह वेळेवर विमानतळ सेवा.',
+        'temple-visits-heading': 'मंदिर भेटी',
+        'temple-visits-text': 'आरामदायक प्रवासासह प्रसिद्ध मंदिरांच्या आध्यात्मिक यात्रा.',
+        'tour-packages-heading': 'टूर पॅकेजेस',
+        'tour-packages-text': 'आमच्या क्यूरेटेड प्रवास योजनांसह प्रसिद्ध पर्यटन स्थळे एक्सप्लोर करा.',
+        'contact-heading': 'आमच्या प्रशासकांशी संपर्क साधा',
+        'admin1-name': 'सय्यद कासिम साहेब',
+        'admin2-name': 'सय्यद खादर',
+        'cars-heading': 'गाडी',
+        'cars-text': 'तुमच्या गरजेनुसार विविध प्रकारची गाडी.',
+        'book-button': 'तुमची राईड बुक करा',
+        'select-language': 'भाषा निवडा:'
+      }
+    };
+
+    // Function to update the content based on the selected language
+    function updateContent(lang) {
+      document.querySelectorAll('[data-key]').forEach(element => {
+        const key = element.getAttribute('data-key');
+        if (translations[lang] && translations[lang][key]) {
+          element.textContent = translations[lang][key];
+        }
+      });
+    }
+
+    // Get the language dropdown element
+    const langSelect = document.getElementById('language-select');
+    // Get the hamburger and mobile menu elements
+    const hamburgerMenu = document.getElementById('hamburger-menu');
+    const closeMenu = document.getElementById('close-menu');
+    const mobileMenuContainer = document.getElementById('mobile-menu-container');
+
+    // Add event listeners to the hamburger menu button
+    hamburgerMenu.addEventListener('click', () => {
+      mobileMenuContainer.classList.remove('-translate-x-full');
+    });
+
+    // Add event listener to the close button
+    closeMenu.addEventListener('click', () => {
+      mobileMenuContainer.classList.add('-translate-x-full');
+    });
+
+    // Add event listener to the dropdown
+    langSelect.addEventListener('change', (event) => {
+      const selectedLang = event.target.value;
+      updateContent(selectedLang);
+      // Save the selected language to localStorage so the booking page can access it
+      localStorage.setItem('selectedLanguage', selectedLang);
+    });
+
+    // Set initial content on page load
+    window.onload = () => {
+        // Check if a language is saved in localStorage
+        const savedLang = localStorage.getItem('selectedLanguage');
+        // If a language is saved, use it. Otherwise, default to English.
+        const initialLang = savedLang || 'en';
+        updateContent(initialLang);
+        langSelect.value = initialLang;
+    };
+  </script>
+
+</body>
+</html>

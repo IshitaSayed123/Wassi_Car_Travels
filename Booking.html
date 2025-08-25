@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Book Your Ride - Wassi Car Travels</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+    body {
+        font-family: 'Inter', sans-serif;
+    }
+    /* General styling for dropdowns to make them look better */
+    select {
+        /* Remove default browser styling */
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        /* Add custom arrow icon */
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236B7280' d='M6 8.5L2.5 5h7L6 8.5z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 0.75rem center;
+        background-size: 0.75rem 0.75rem;
+        padding-right: 2.5rem; /* Make space for the icon */
+    }
+
+    /* Styling for time inputs */
+    .time-container {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    .time-container select {
+      flex: 1;
+    }
+    /* Styling for call and WhatsApp buttons */
+    .button-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .call-button, .whatsapp-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      color: white;
+      text-decoration: none;
+      transition: background-color 0.3s;
+    }
+    .call-button {
+      background-color: #3B82F6; /* Blue-600 */
+    }
+    .call-button:hover {
+      background-color: #2563EB; /* Blue-700 */
+    }
+    .whatsapp-button {
+      background-color: #25D366; /* WhatsApp green */
+    }
+    .whatsapp-button:hover {
+      background-color: #1DA851;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+  <!-- Navbar -->
+  <header class="bg-white shadow py-4">
+    <div class="container mx-auto flex justify-between items-center px-6">
+      <div class="flex items-center space-x-2">
+        <a href="car.html">
+          <img src="https://img.icons8.com/ios-filled/50/car--v1.png" alt="Wassi Car Travels Logo" class="w-10 h-10">
+        </a>
+        <h1 class="text-2xl font-bold text-blue-800">Wassi Car Travels</h1>
+      </div>
+      
+      <!-- Go Back to Home link with data-key for translation -->
+      <a href="car.html" class="text-blue-600 hover:underline" data-key="back-to-home">Go Back to Home</a>
+    </div>
+  </header>
+
+  <!-- Booking Section -->
+  <section id="booking" class="bg-white py-10 px-6">
+    <h2 class="text-3xl font-semibold text-center text-blue-800 mb-6" data-key="book-ride-heading">Book Your Ride</h2>
+    <form id="bookingForm" class="max-w-xl mx-auto space-y-4">
+      <input type="text" placeholder="Your Name" class="w-full border border-gray-300 rounded p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none" required data-key="name-placeholder">
+      
+      <!-- Phone number input field with inline country code dropdown -->
+      <div class="flex items-center space-x-2">
+        <!-- Dropdown for country selection -->
+        <select id="countryCode" class="border border-gray-300 rounded p-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" onchange="updatePhoneInput()">
+          <option value="india">+91 (India)</option>
+        </select>
+        
+        <!-- Phone number format updates based on country -->
+        <input type="tel" 
+               id="phoneNumber"
+               placeholder="xxxxx xxxxx" 
+               class="w-full border border-gray-300 rounded p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none" 
+               maxlength="10" 
+               required>
+      </div>
+
+      <input type="text" placeholder="Pickup Location" class="w-full border border-gray-300 rounded p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none" required data-key="pickup-placeholder">
+      <input type="text" placeholder="Drop Location" class="w-full border border-gray-300 rounded p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none" required data-key="drop-placeholder">
+      
+      <!-- New field for Number of Passengers -->
+      <label for="passengerCount" class="block text-gray-700 font-semibold mt-4" data-key="passengers-label">Number of Passengers:</label>
+      <input type="number" id="passengerCount" min="1" placeholder="Number of Passengers" class="w-full border border-gray-300 rounded p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none" required data-key="passengers-placeholder">
+      
+      <!-- New field for Purpose of Travel -->
+      <label for="tripPurpose" class="block text-gray-700 font-semibold mt-4" data-key="purpose-label">Purpose of Travel:</label>
+      <input type="text" id="tripPurpose" placeholder="e.g., Business, Personal, Family trip" class="w-full border border-gray-300 rounded p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none" required data-key="purpose-placeholder">
+
+      <!-- Trip Type Dropdown -->
+      <select id="tripType" class="w-full border border-gray-300 rounded p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none" required>
+        <option value="" disabled selected data-key="select-trip-type">Select Trip Type</option>
+        <option value="pickup" data-key="pickup-option">Pickup</option>
+        <option value="drop" data-key="drop-option">Drop</option>
+        <option value="both" data-key="both-option">Both</option>
+      </select>
+
+      <!-- Pickup Date -->
+      <label for="pickupDate" class="block text-gray-700 font-semibold mt-4" data-key="pickup-date-label">Pickup Date:</label>
+      <input type="date" id="pickupDate" class="w-full border border-gray-300 rounded p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none" required>
+
+      <!-- Drop Date -->
+      <label for="dropDate" class="block text-gray-700 font-semibold mt-4" data-key="drop-date-label">Drop Date:</label>
+      <input type="date" id="dropDate" class="w-full border border-gray-300 rounded p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none" required>
+      
+      <!-- Pickup Time Dropdowns -->
+      <div>
+        <label for="pickupHour" class="block text-gray-700 font-semibold mb-2" data-key="pickup-time-label">Pickup Time:</label>
+        <div class="time-container">
+          <select id="pickupHour" class="border border-gray-300 rounded p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none" required>
+            <option value="" disabled selected data-key="hour-placeholder">Hour</option>
+          </select>
+          <select id="pickupMinute" class="border border-gray-300 rounded p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none" required>
+            <option value="" disabled selected data-key="minute-placeholder">Minute</option>
+          </select>
+          <select id="pickupAmPm" class="border border-gray-300 rounded p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none" required>
+            <option value="AM">AM</option>
+            <option value="PM">PM</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Drop Time Dropdowns -->
+      <div>
+        <label for="dropHour" class="block text-gray-700 font-semibold mb-2" data-key="drop-time-label">Drop Time:</label>
+        <div class="time-container">
+          <select id="dropHour" class="border border-gray-300 rounded p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none" required>
+            <option value="" disabled selected data-key="hour-placeholder">Hour</option>
+          </select>
+          <select id="dropMinute" class="border border-gray-300 rounded p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none" required>
+            <option value="" disabled selected data-key="minute-placeholder">Minute</option>
+          </select>
+          <select id="dropAmPm" class="border border-gray-300 rounded p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none" required>
+            <option value="AM">AM</option>
+            <option value="PM">PM</option>
+          </select>
+        </div>
+      </div>
+      
+      <!-- Contact and Method Dropdowns -->
+      <div class="flex items-center space-x-2">
+        <div class="flex-1">
+          <label for="adminSelect" class="block text-gray-700 font-semibold mb-2" data-key="contact-label">Contact Person:</label>
+          <select id="adminSelect" class="w-full border border-gray-300 rounded p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+              <option value="9290630775" data-key="khasim-saheb">Syed Khasim Saheb</option>
+              <option value="7797795786" data-key="khadar-saheb">Syed Khadar</option>
+          </select>
+        </div>
+        <div class="flex-1">
+          <label for="contactMethod" class="block text-gray-700 font-semibold mb-2" data-key="contact-method-label">Method:</label>
+          <select id="contactMethod" class="w-full border border-gray-300 rounded p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+              <option value="call" data-key="method-call">Call</option>
+              <option value="whatsapp" data-key="method-whatsapp">WhatsApp Message</option>
+              <option value="both" data-key="method-both">Both</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="button-container flex-row justify-between items-center">
+        <!-- Back and Clear buttons, now with blue color -->
+        <button type="button" id="backBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded" data-key="back-button">
+          Back
+        </button>
+        <button type="button" id="clearForm" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded" data-key="clear-button">
+          Clear
+        </button>
+        <!-- Original Submit button to trigger the actions -->
+        <button type="submit" id="submitBooking" class="bg-blue-700 hover:bg-blue-800 text-white font-semibold px-6 py-2 rounded" data-key="submit-button">
+          Submit
+        </button>
+      </div>
+
+      <!-- Message box for user feedback -->
+      <div id="messageBox" class="mt-4 p-4 rounded-md text-center hidden"></div>
+    </form>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-blue-900 text-white text-center py-4 mt-10">
+    <p data-key="copyright-text">&copy; 2025 Wassi Car Travels. All rights reserved.</p>
+  </footer>
+
+  <script type="module">
+    // Object containing translations for different languages
+    const translations = {
+      en: {
+        'back-to-home': 'Go Back to Home',
+        'book-ride-heading': 'Book Your Ride',
+        'name-placeholder': 'Your Name',
+        'pickup-placeholder': 'Pickup Location',
+        'drop-placeholder': 'Drop Location',
+        'passengers-label': 'Number of Passengers:',
+        'passengers-placeholder': 'Number of Passengers',
+        'purpose-label': 'Purpose of Travel:',
+        'purpose-placeholder': 'e.g., Business, Personal, Family trip',
+        'select-trip-type': 'Select Trip Type',
+        'pickup-option': 'Pickup',
+        'drop-option': 'Drop',
+        'both-option': 'Both',
+        'pickup-date-label': 'Pickup Date:',
+        'drop-date-label': 'Drop Date:',
+        'pickup-time-label': 'Pickup Time:',
+        'drop-time-label': 'Drop Time:',
+        'hour-placeholder': 'Hour',
+        'minute-placeholder': 'Minute',
+        'contact-label': 'Contact Person:',
+        'khasim-saheb': 'Syed Khasim Saheb',
+        'khadar-saheb': 'Syed Khadar',
+        'contact-method-label': 'Method:',
+        'method-call': 'Call',
+        'method-whatsapp': 'WhatsApp Message',
+        'method-both': 'Both',
+        'back-button': 'Back',
+        'clear-button': 'Clear',
+        'submit-button': 'Submit',
+        'copyright-text': '© 2025 Wassi Car Travels. All rights reserved.',
+        'fill-details-message': 'Please fill in all the details.',
+        'invalid-phone': 'Please enter a valid phone number with the correct format.'
+      },
+      te: {
+        'back-to-home': 'హోమ్‌కు తిరిగి వెళ్ళు',
+        'book-ride-heading': 'మీ ప్రయాణాన్ని బుక్ చేసుకోండి',
+        'name-placeholder': 'మీ పేరు',
+        'pickup-placeholder': 'పికప్ ప్రదేశం',
+        'drop-placeholder': 'డ్రాప్ ప్రదేశం',
+        'passengers-label': 'ప్రయాణీకుల సంఖ్య:',
+        'passengers-placeholder': 'ప్రయాణీకుల సంఖ్య',
+        'purpose-label': 'ప్రయాణ ఉద్దేశం:',
+        'purpose-placeholder': 'ఉదాహరణకు, వ్యాపారం, వ్యక్తిగత ప్రయాణం, కుటుంబ యాత్ర',
+        'select-trip-type': 'ట్రిప్ రకాన్ని ఎంచుకోండి',
+        'pickup-option': 'పికప్',
+        'drop-option': 'డ్రాప్',
+        'both-option': 'రెండు',
+        'pickup-date-label': 'పికప్ తేదీ:',
+        'drop-date-label': 'డ్రాప్ తేదీ:',
+        'pickup-time-label': 'పికప్ సమయం:',
+        'drop-time-label': 'డ్రాప్ సమయం:',
+        'hour-placeholder': 'గంట',
+        'minute-placeholder': 'నిమిషం',
+        'contact-label': 'సంప్రదించే వ్యక్తి:',
+        'khasim-saheb': 'సయ్యద్ ఖాసిం సాహెబ్',
+        'khadar-saheb': 'సయ్యద్ ఖాదర్',
+        'contact-method-label': 'విధానం:',
+        'method-call': 'కాల్ చేయండి',
+        'method-whatsapp': 'వాట్సాప్ మెసేజ్',
+        'method-both': 'రెండూ',
+        'back-button': 'వెనక్కి',
+        'clear-button': 'క్లియర్',
+        'submit-button': 'సమర్పించు',
+        'copyright-text': '© 2025 వసి కార్ ట్రావెల్స్. అన్ని హక్కులు రిజర్వ్ చేయబడ్డాయి.',
+        'fill-details-message': 'దయచేసి అన్ని వివరాలను పూరించండి.',
+        'invalid-phone': 'దయచేసి సరైన ఫార్మాట్‌తో చెల్లుబాటు అయ్యే ఫోన్ నంబర్‌ను నమోదు చేయండి।'
+      },
+      hi: {
+        'back-to-home': 'होम पर वापस जाएं',
+        'book-ride-heading': 'अपनी सवारी बुक करें',
+        'name-placeholder': 'आपका नाम',
+        'pickup-placeholder': 'पिकअप स्थान',
+        'drop-placeholder': 'ड्रॉप स्थान',
+        'passengers-label': 'यात्रियों की संख्या:',
+        'passengers-placeholder': 'यात्रियों की संख्या',
+        'purpose-label': 'यात्रा का उद्देश्य:',
+        'purpose-placeholder': 'उदाहरण के लिए, व्यवसाय, व्यक्तिगत यात्रा, परिवार की यात्रा',
+        'select-trip-type': 'यात्रा का प्रकार चुनें',
+        'pickup-option': 'पिकअप',
+        'drop-option': 'ड्रॉप',
+        'both-option': 'दोनों',
+        'pickup-date-label': 'पिकअप तिथि:',
+        'drop-date-label': 'ड्रॉप तिथि:',
+        'pickup-time-label': 'पिकअप समय:',
+        'drop-time-label': 'ड्रॉप समय:',
+        'hour-placeholder': 'घंटा',
+        'minute-placeholder': 'मिनट',
+        'contact-label': 'संपर्क व्यक्ति:',
+        'khasim-saheb': 'सैयद कासिम साहिब',
+        'khadar-saheb': 'सैयद खादर',
+        'contact-method-label': 'तरीका:',
+        'method-call': 'कॉल करें',
+        'method-whatsapp': 'व्हाट्सएप संदेश',
+        'method-both': 'दोनों',
+        'back-button': 'वापस',
+        'clear-button': 'साफ करें',
+        'submit-button': 'जमा करें',
+        'copyright-text': '© 2025 वासी कार ट्रेवल्स. सभी अधिकार सुरक्षित हैं।',
+        'fill-details-message': 'कृपया सभी विवरण भरें।',
+        'invalid-phone': 'कृपया सही प्रारूप के साथ एक वैध फ़ोन नंबर दर्ज करें।'
+      },
+      ta: {
+        'back-to-home': 'முகப்புக்குத் திரும்பு',
+        'book-ride-heading': 'உங்கள் சவாரியை பதிவு செய்யுங்கள்',
+        'name-placeholder': 'உங்கள் பெயர்',
+        'pickup-placeholder': 'பிக்கப் இடம்',
+        'drop-placeholder': 'டிராப் இடம்',
+        'passengers-label': 'பயணிகளின் எண்ணிக்கை:',
+        'passengers-placeholder': 'பயணிகளின் எண்ணிக்கை',
+        'purpose-label': 'பயணத்தின் நோக்கம்:',
+        'purpose-placeholder': 'எ.கா., வணிகம், தனிப்பட்ட பயணம், குடும்பப் பயணம்',
+        'select-trip-type': 'பயண வகையைத் தேர்ந்தெடுக்கவும்',
+        'pickup-option': 'பிக்கப்',
+        'drop-option': 'டிராப்',
+        'both-option': 'இரண்டும்',
+        'pickup-date-label': 'பிக்கப் தேதி:',
+        'drop-date-label': 'டிராப் தேதி:',
+        'pickup-time-label': 'பிக்கப் நேரம்:',
+        'drop-time-label': 'டிராப் நேரம்:',
+        'hour-placeholder': 'மணி',
+        'minute-placeholder': 'நிமிடம்',
+        'contact-label': 'தொடர்பு நபர்:',
+        'khasim-saheb': 'சையது காசிம் சாஹிப்',
+        'khadar-saheb': 'சையது காதர்',
+        'contact-method-label': 'முறை:',
+        'method-call': 'அழைப்பு',
+        'method-whatsapp': 'வாட்ஸ்அப் செய்தி',
+        'method-both': 'இரண்டும்',
+        'back-button': 'பின்னால்',
+        'clear-button': 'நீக்கு',
+        'submit-button': 'சமர்ப்பி',
+        'copyright-text': '© 2025 வாசி கார் ட்ராவல்ஸ். அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை.',
+        'fill-details-message': 'தயவுசெய்து அனைத்து விவரங்களையும் நிரப்பவும்.',
+        'invalid-phone': 'சரியான வடிவத்துடன் செல்லுபடியாகும் தொலைபேசி எண்ணை உள்ளிடவும்.'
+      },
+      ml: {
+        'back-to-home': 'ഹോമിലേക്ക് മടങ്ങുക',
+        'book-ride-heading': 'നിങ്ങളുടെ യാത്ര ബുക്ക് ചെയ്യുക',
+        'name-placeholder': 'നിങ്ങളുടെ പേര്',
+        'pickup-placeholder': 'പിക്കപ്പ് സ്ഥലം',
+        'drop-placeholder': 'ഡ്രോപ്പ് സ്ഥലം',
+        'passengers-label': 'യാത്രക്കാരുടെ എണ്ണം:',
+        'passengers-placeholder': 'യാത്രക്കാരുടെ എണ്ണം',
+        'purpose-label': 'യാത്രയുടെ ഉദ്ദേശ്യം:',
+        'purpose-placeholder': 'ഉദാഹരണത്തിന്, ബിസിനസ്സ്, വ്യക്തിപരമായ യാത്ര, കുടുംബ യാത്ര',
+        'select-trip-type': 'യാത്രാ തരം തിരഞ്ഞെടുക്കുക',
+        'pickup-option': 'പിക്കപ്പ്',
+        'drop-option': 'ഡ്രോപ്പ്',
+        'both-option': 'രണ്ടും',
+        'pickup-date-label': 'പിക്കപ്പ് തീയതി:',
+        'drop-date-label': 'ഡ്രോപ്പ് തീയതി:',
+        'pickup-time-label': 'പിക്കപ്പ് സമയം:',
+        'drop-time-label': 'ഡ്രോപ്പ് സമയം:',
+        'hour-placeholder': 'മണിക്കൂർ',
+        'minute-placeholder': 'മിനിറ്റ്',
+        'contact-label': 'ബന്ധപ്പെടാനുള്ള ആൾ:',
+        'khasim-saheb': 'സയീദ് ഖാസിം സാഹിബ്',
+        'khadar-saheb': 'സയീദ് ഖാദർ',
+        'contact-method-label': 'രീതി:',
+        'method-call': 'വിളിക്കുക',
+        'method-whatsapp': 'വാട്ട്‌സ്ആപ്പ് സന്ദേശം',
+        'method-both': 'രണ്ടും',
+        'back-button': 'പുറകിലേക്ക്',
+        'clear-button': 'മാറ്റുക',
+        'submit-button': 'സമർപ്പിക്കുക',
+        'copyright-text': '© 2025 വാസി കാർ ട്രാവൽസ്. എല്ലാ അവകാശങ്ങളും സംവരണം ചെയ്തിരിക്കുന്നു.',
+        'fill-details-message': 'ദയവായി എല്ലാ വിവരങ്ങളും പൂരിപ്പിക്കുക.',
+        'invalid-phone': 'ശരിയായ ഫോർമാറ്റുള്ള ഒരു സാധുവായ ഫോൺ നമ്പർ നൽകുക.'
+      },
+      kn: {
+        'back-to-home': 'ಮನೆಗೆ ಹಿಂತಿರುಗಿ',
+        'book-ride-heading': 'ನಿಮ್ಮ ಸವಾರಿಯನ್ನು ಬುಕ್ ಮಾಡಿ',
+        'name-placeholder': 'ನಿಮ್ಮ ಹೆಸರು',
+        'pickup-placeholder': 'ಪಿಕಪ್ ಸ್ಥಳ',
+        'drop-placeholder': 'ಡ್ರಾಪ್ ಸ್ಥಳ',
+        'passengers-label': 'ಪ್ರಯಾಣಿಕರ ಸಂಖ್ಯೆ:',
+        'passengers-placeholder': 'ಪ್ರಯಾಣಿಕರ ಸಂಖ್ಯೆ',
+        'purpose-label': 'ಪ್ರವಾಸದ ಉದ್ದೇಶ:',
+        'purpose-placeholder': 'ಉದಾಹರಣೆಗೆ, ವ್ಯಾಪಾರ, ವೈಯಕ್ತಿಕ ಪ್ರವಾಸ, ಕುಟುಂಬ ಪ್ರವಾಸ',
+        'select-trip-type': 'ಪ್ರವಾಸದ ಪ್ರಕಾರವನ್ನು ಆಯ್ಕೆಮಾಡಿ',
+        'pickup-option': 'ಪಿಕಪ್',
+        'drop-option': 'ಡ್ರಾಪ್',
+        'both-option': 'ಎರಡೂ',
+        'pickup-date-label': 'ಪಿಕಪ್ ದಿನಾಂಕ:',
+        'drop-date-label': 'ಡ್ರಾಪ್ ದಿನಾಂಕ:',
+        'pickup-time-label': 'ಪಿಕಪ್ ಸಮಯ:',
+        'drop-time-label': 'ಡ್ರಾಪ್ ಸಮಯ:',
+        'hour-placeholder': 'ಗಂಟೆ',
+        'minute-placeholder': 'ನಿಮಿಷ',
+        'contact-label': 'ಸಂಪರ್ಕ ವ್ಯಕ್ತಿ:',
+        'khasim-saheb': 'ಸೈಯದ್ ಖಾಸಿಂ ಸಾಹೇಬ್',
+        'khadar-saheb': 'ಸೈಯದ್ ಖಾದರ್',
+        'contact-method-label': 'ವಿಧಾನ:',
+        'method-call': 'ಕರೆ ಮಾಡಿ',
+        'method-whatsapp': 'ವಾಟ್ಸಾಪ್ ಸಂದೇಶ',
+        'method-both': 'ಎರಡೂ',
+        'back-button': 'ಹಿಂದೆ',
+        'clear-button': 'ತೆರವುಗೊಳಿಸಿ',
+        'submit-button': 'ಸಲ್ಲಿಸಿ',
+        'copyright-text': '© 2025 ವಾಸಿ ಕಾರ್ ಟ್ರಾವೆಲ್ಸ್. ಎಲ್ಲಾ ಹಕ್ಕುಗಳನ್ನು ಕಾಯ್ದಿರಿಸಲಾಗಿದೆ.',
+        'fill-details-message': 'ದಯವಿಟ್ಟು ಎಲ್ಲಾ ವಿವರಗಳನ್ನು ಭರ್ತಿ ಮಾಡಿ.',
+        'invalid-phone': 'ದಯವಿಟ್ಟು ಸರಿಯಾದ ಫಾರ್ಮ್ಯಾಟ್‌ನೊಂದಿಗೆ ಮಾನ್ಯವಾದ ಫೋನ್ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ.'
+      },
+      pa: {
+        'back-to-home': 'ਘਰ ਵਾਪਸ ਜਾਓ',
+        'book-ride-heading': 'ਆਪਣੀ ਸਵਾਰੀ ਬੁੱਕ ਕਰੋ',
+        'name-placeholder': 'ਤੁਹਾਡਾ ਨਾਮ',
+        'pickup-placeholder': 'ਪਿਕਅੱਪ ਸਥਾਨ',
+        'drop-placeholder': 'ਡ੍ਰੌਪ ਸਥਾਨ',
+        'passengers-label': 'ਯਾਤਰੀਆਂ ਦੀ ਸੰਖਿਆ:',
+        'passengers-placeholder': 'ਯਾਤਰੀਆਂ ਦੀ ਸੰਖਿਆ',
+        'purpose-label': 'ਯਾਤਰਾ ਦਾ ਉਦੇਸ਼:',
+        'purpose-placeholder': 'ਉਦਾਹਰਣ ਲਈ, ਵਪਾਰ, ਨਿੱਜੀ ਯਾਤਰਾ, ਪਰਿਵਾਰਕ ਯਾਤਰਾ',
+        'select-trip-type': 'ਯਾਤਰਾ ਦਾ ਪ੍ਰਕਾਰ ਚੁਣੋ',
+        'pickup-option': 'ਪਿਕਅੱਪ',
+        'drop-option': 'ਡ੍ਰੌਪ',
+        'both-option': 'ਦੋਵੇਂ',
+        'pickup-date-label': 'ਪਿਕਅੱਪ ਮਿਤੀ:',
+        'drop-date-label': 'ਡ੍ਰੌਪ ਮਿਤੀ:',
+        'pickup-time-label': 'ਪਿਕਅੱਪ ਸਮਾਂ:',
+        'drop-time-label': 'ਡ੍ਰੌਪ ਸਮਾਂ:',
+        'hour-placeholder': 'ਘੰਟਾ',
+        'minute-placeholder': 'ਮਿੰਟ',
+        'contact-label': 'ਸੰਪਰਕ ਵਿਅਕਤੀ:',
+        'khasim-saheb': 'ਸੈਯਦ ਕਾਸਿਮ ਸਾਹਿਬ',
+        'khadar-saheb': 'ਸੈਯਦ ਖਾਦਰ',
+        'contact-method-label': 'ਤਰੀਕਾ:',
+        'method-call': 'ਕਾਲ ਕਰੋ',
+        'method-whatsapp': 'ਵਟਸਐਪ ਸੁਨੇਹਾ',
+        'method-both': 'ਦੋਵੇਂ',
+        'back-button': 'ਵਾਪਸ',
+        'clear-button': 'ਸਾਫ਼ ਕਰੋ',
+        'submit-button': 'ਜਮ੍ਹਾਂ ਕਰੋ',
+        'copyright-text': '© 2025 ਵਾਸੀ ਕਾਰ ਟ੍ਰੈਵਲਜ਼. ਸਾਰੇ ਹੱਕ ਰਾਖਵੇਂ ਹਨ।',
+        'fill-details-message': 'ਕਿਰਪਾ ਕਰਕੇ ਸਾਰੇ ਵੇਰਵੇ ਭਰੋ।',
+        'invalid-phone': 'ਕਿਰਪਾ ਕਰਕੇ ਸਹੀ ਫਾਰਮੈਟ ਨਾਲ ਇੱਕ ਵੈਧ ਫ਼ੋਨ ਨੰਬਰ ਦਾਖਲ ਕਰੋ।'
+      },
+      bn: {
+        'back-to-home': 'হোমে ফিরে যান',
+        'book-ride-heading': 'আপনার রাইড বুক করুন',
+        'name-placeholder': 'আপনার নাম',
+        'pickup-placeholder': 'পিকআপ স্থান',
+        'drop-placeholder': 'ড্রপ স্থান',
+        'passengers-label': 'যাত্রীর সংখ্যা:',
+        'passengers-placeholder': 'যাত্রীর সংখ্যা',
+        'purpose-label': 'ভ্রমণের উদ্দেশ্য:',
+        'purpose-placeholder': 'যেমন, ব্যবসা, ব্যক্তিগত ভ্রমণ, পারিবারিক ভ্রমণ',
+        'select-trip-type': 'ভ্রমণের ধরন নির্বাচন করুন',
+        'pickup-option': 'পিকআপ',
+        'drop-option': 'ড্রপ',
+        'both-option': 'উভয়',
+        'pickup-date-label': 'পিকআপ তারিখ:',
+        'drop-date-label': 'ড্রপ তারিখ:',
+        'pickup-time-label': 'পিকআপ সময়:',
+        'drop-time-label': 'ড্রপ সময়:',
+        'hour-placeholder': 'ঘন্টা',
+        'minute-placeholder': 'মিনিট',
+        'contact-label': 'যোগাযোগ ব্যক্তি:',
+        'khasim-saheb': 'সৈয়দ কাসিম সাহেব',
+        'khadar-saheb': 'সৈয়দ খাদের',
+        'contact-method-label': 'পদ্ধতি:',
+        'method-call': 'কল করুন',
+        'method-whatsapp': 'হোয়াটসঅ্যাপ মেসেজ',
+        'method-both': 'উভয়',
+        'back-button': 'পিছনে',
+        'clear-button': 'মুছে ফেলুন',
+        'submit-button': 'জমা দিন',
+        'copyright-text': '© 2025 ওয়াসি কার ট্রাভেলস. সমস্ত অধিকার সংরক্ষিত।',
+        'fill-details-message': 'দয়া করে সমস্ত বিবরণ পূরণ করুন।',
+        'invalid-phone': 'অনুগ্রহ করে সঠিক ফরম্যাট সহ একটি বৈধ ফোন নম্বর লিখুন।'
+      },
+      gu: {
+        'back-to-home': 'હોમ પર પાછા જાઓ',
+        'book-ride-heading': 'તમારી રાઈડ બુક કરો',
+        'name-placeholder': 'તમારું નામ',
+        'pickup-placeholder': 'પિકઅપ સ્થાન',
+        'drop-placeholder': 'ડ્રોપ સ્થાન',
+        'passengers-label': 'મુસાફરોની સંખ્યા:',
+        'passengers-placeholder': 'મુસાફરોની સંખ્યા',
+        'purpose-label': 'યાત્રાનો હેતુ:',
+        'purpose-placeholder': 'દા.ત., વ્યવસાય, વ્યક્તિગત પ્રવાસ, કૌટુંબિક પ્રવાસ',
+        'select-trip-type': 'ટ્રિપનો પ્રકાર પસંદ કરો',
+        'pickup-option': 'પિકઅપ',
+        'drop-option': 'ડ્રોપ',
+        'both-option': 'બંને',
+        'pickup-date-label': 'પિકઅપ તારીખ:',
+        'drop-date-label': 'ડ્રોપ તારીખ:',
+        'pickup-time-label': 'પિકઅપ સમય:',
+        'drop-time-label': 'ડ્રોપ સમય:',
+        'hour-placeholder': 'કલાક',
+        'minute-placeholder': 'મિનિટ',
+        'contact-label': 'સંપર્ક વ્યક્તિ:',
+        'khasim-saheb': 'સૈયદ કાસિમ સાહેબ',
+        'khadar-saheb': 'સૈયદ ખાદર',
+        'contact-method-label': 'પદ્ધતિ:',
+        'method-call': 'કૉલ કરો',
+        'method-whatsapp': 'વોટ્સએપ મેસેજ',
+        'method-both': 'બંને',
+        'back-button': 'પાછા',
+        'clear-button': 'સાફ કરો',
+        'submit-button': 'સબમિટ કરો',
+        'copyright-text': '© 2025 વાસી કાર ટ્રાવેલ્સ. બધા હકો સુરક્ષિત છે.',
+        'fill-details-message': 'કૃપા કરીને બધા વિગતો ભરો.',
+        'invalid-phone': 'કૃપા કરીને યોગ્ય ફોર્મેટ સાથે માન્ય ફોન નંબર દાખલ કરો.'
+      },
+      mr: {
+        'back-to-home': 'होम वर परत जा',
+        'book-ride-heading': 'तुमची राईड बुक करा',
+        'name-placeholder': 'तुमचे नाव',
+        'pickup-placeholder': 'पिकअप ठिकाण',
+        'drop-placeholder': 'ड्रॉप ठिकाण',
+        'passengers-label': 'प्रवाशांची संख्या:',
+        'passengers-placeholder': 'प्रवाशांची संख्या',
+        'purpose-label': 'प्रवासाचा उद्देश:',
+        'purpose-placeholder': 'उदा. व्यवसाय, वैयक्तिक प्रवास, कौटुंबिक प्रवास',
+        'select-trip-type': 'प्रवासाचा प्रकार निवडा',
+        'pickup-option': 'पिकअप',
+        'drop-option': 'ड्रॉप',
+        'both-option': 'दोन्ही',
+        'pickup-date-label': 'पिकअप तारीख:',
+        'drop-date-label': 'ड्रॉप तारीख:',
+        'pickup-time-label': 'पिकअप वेळ:',
+        'drop-time-label': 'ड्रॉप वेळ:',
+        'hour-placeholder': 'तास',
+        'minute-placeholder': 'मिनिट',
+        'contact-label': 'संपर्क व्यक्ती:',
+        'khasim-saheb': 'सय्यद कासिम साहेब',
+        'khadar-saheb': 'सय्यद खादर',
+        'contact-method-label': 'पद्धत:',
+        'method-call': 'कॉल करा',
+        'method-whatsapp': 'व्हाट्सएप संदेश',
+        'method-both': 'दोन्ही',
+        'back-button': 'परत',
+        'clear-button': 'साफ करा',
+        'submit-button': 'सादर करा',
+        'copyright-text': '© 2025 वासी कार ट्रॅव्हल्स. सर्व हक्क राखीव.',
+        'fill-details-message': 'कृपया सर्व माहिती भरा.',
+        'invalid-phone': 'कृपया योग्य फॉरमॅटसह वैध फोन नंबर प्रविष्ट करा.'
+      }
+    };
+
+    // Function to show a message box
+    function showMessage(text, bgColor) {
+      const messageBox = document.getElementById('messageBox');
+      messageBox.textContent = text;
+      messageBox.className = `mt-4 p-4 rounded-md text-white ${bgColor}`;
+      messageBox.style.display = 'block';
+      setTimeout(() => {
+        messageBox.style.display = 'none';
+      }, 3000);
+    }
+
+    // Function to update the content based on the selected language
+    function updateContent(lang) {
+        document.querySelectorAll('[data-key]').forEach(element => {
+            const key = element.getAttribute('data-key');
+            if (translations[lang] && translations[lang][key]) {
+                if (element.tagName === 'INPUT' && element.hasAttribute('placeholder')) {
+                    element.placeholder = translations[lang][key];
+                } else if (element.tagName === 'OPTION') {
+                    element.textContent = translations[lang][key];
+                } else {
+                    element.textContent = translations[lang][key];
+                }
+            }
+        });
+    }
+
+    // Function to clear all form inputs
+    function clearForm() {
+      document.getElementById('bookingForm').reset();
+      updatePhoneInput(); // Reset phone input placeholder and max length
+    }
+
+    // Function to update the phone number field based on the selected country
+    function updatePhoneInput() {
+      // The country code is now fixed to 'india'
+      const phoneNumberInput = document.getElementById('phoneNumber');
+      phoneNumberInput.value = ''; // Clear input
+      phoneNumberInput.placeholder = 'xxxxx xxxxx';
+      phoneNumberInput.maxLength = 10;
+      phoneNumberInput.pattern = '\\d{10}';
+    }
+
+    // Function to populate hour and minute dropdowns
+    function populateTimeDropdowns(hourId, minuteId) {
+        const hourSelect = document.getElementById(hourId);
+        const minuteSelect = document.getElementById(minuteId);
+
+        for (let i = 1; i <= 12; i++) {
+            const hourOption = document.createElement('option');
+            hourOption.value = i.toString().padStart(2, '0');
+            hourOption.text = i.toString().padStart(2, '0');
+            hourSelect.appendChild(hourOption);
+        }
+
+        for (let i = 0; i < 60; i += 5) {
+            const minuteOption = document.createElement('option');
+            minuteOption.value = i.toString().padStart(2, '0');
+            minuteOption.text = i.toString().padStart(2, '0');
+            minuteSelect.appendChild(minuteOption);
+        }
+    }
+
+    // Event listeners
+    window.onload = function() {
+        populateTimeDropdowns('pickupHour', 'pickupMinute');
+        populateTimeDropdowns('dropHour', 'dropMinute');
+        updatePhoneInput(); // Initialize input when page loads
+        
+        // Get the language from localStorage and update content
+        const savedLang = localStorage.getItem('selectedLanguage');
+        const initialLang = savedLang || 'en';
+        updateContent(initialLang);
+    }
+
+    // Back button event listener, now navigates to car.html
+    document.getElementById('backBtn').addEventListener('click', function() {
+        window.location.href = 'car.html';
+    });
+    
+    document.getElementById('bookingForm').addEventListener('submit', function(e) {
+      e.preventDefault(); // Prevent default form submission
+
+      // Get the form elements
+      const name = document.querySelector('input[placeholder="Your Name"]').value;
+      const phone = document.getElementById('phoneNumber').value;
+      const pickupLocation = document.querySelector('input[placeholder="Pickup Location"]').value;
+      const dropLocation = document.querySelector('input[placeholder="Drop Location"]').value;
+      const passengerCount = document.getElementById('passengerCount').value;
+      const tripPurpose = document.getElementById('tripPurpose').value;
+      const tripType = document.getElementById('tripType').value;
+      const pickupDate = document.getElementById('pickupDate').value;
+      const dropDate = document.getElementById('dropDate').value;
+      const pickupHour = document.getElementById('pickupHour').value;
+      const pickupMinute = document.getElementById('pickupMinute').value;
+      const pickupAmPm = document.getElementById('pickupAmPm').value;
+      const dropHour = document.getElementById('dropHour').value;
+      const dropMinute = document.getElementById('dropMinute').value;
+      const dropAmPm = document.getElementById('dropAmPm').value;
+      const adminPhoneNumber = document.getElementById('adminSelect').value;
+      const contactMethod = document.getElementById('contactMethod').value;
+      
+      const pickupTime = `${pickupHour}:${pickupMinute} ${pickupAmPm}`;
+      const dropTime = `${dropHour}:${dropMinute} ${dropAmPm}`;
+
+      // Check if all fields are filled
+      if (!name || !phone || !pickupLocation || !dropLocation || !passengerCount || !tripPurpose || !tripType || !pickupDate || !dropDate || !pickupHour || !pickupMinute || !dropHour || !dropMinute) {
+        const currentLang = localStorage.getItem('selectedLanguage') || 'en';
+        const errorMessage = translations[currentLang]['fill-details-message'];
+        showMessage(errorMessage, 'bg-red-500');
+        return;
+      }
+      
+      // Validate phone number based on country code
+      const phoneInput = document.getElementById('phoneNumber');
+      if (!phoneInput.checkValidity()) {
+        const currentLang = localStorage.getItem('selectedLanguage') || 'en';
+        const errorMessage = translations[currentLang]['invalid-phone'];
+        showMessage(errorMessage, 'bg-red-500');
+        return;
+      }
+
+      // Create WhatsApp message
+      const message = `Booking Request from Wassi Car Travels Website:\n\n` +
+                      `Name: ${name}\n` +
+                      `Phone: ${phone}\n` +
+                      `Number of Passengers: ${passengerCount}\n` +
+                      `Purpose of Travel: ${tripPurpose}\n` +
+                      `Trip Type: ${tripType}\n` +
+                      `Pickup Date: ${pickupDate}\n` +
+                      `Drop Date: ${dropDate}\n` +
+                      `Pickup Time: ${pickupTime}\n` +
+                      `Drop Time: ${dropTime}\n` +
+                      `Pickup Location: ${pickupLocation}\n` +
+                      `Drop Location: ${dropLocation}`;
+      
+      // Encode the message for the URL
+      const encodedMessage = encodeURIComponent(message);
+      
+      // WhatsApp link
+      const whatsappUrl = `https://wa.me/${adminPhoneNumber}?text=${encodedMessage}`;
+      
+      // Handle the contact method
+      if (contactMethod === 'call' || contactMethod === 'both') {
+        window.location.href = `tel:${adminPhoneNumber}`;
+      }
+      if (contactMethod === 'whatsapp' || contactMethod === 'both') {
+        // Use a slight delay for 'both' to allow the call intent to be processed first
+        setTimeout(() => {
+          window.open(whatsappUrl, '_blank');
+        }, 500); // 500ms delay
+      }
+    });
+
+    document.getElementById('clearForm').addEventListener('click', clearForm);
+  </script>
+
+</body>
+</html>
